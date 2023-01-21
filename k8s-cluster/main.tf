@@ -4,7 +4,7 @@ module "k8s-yandex-cluster" {
     global_vars = {
       cluster_name    = var.cluster_name
       base_domain     = var.base_domain
-      vault_server    = var.vault_server
+      vault_server    = var.VAULT_ADDR
 
       service_cidr    = var.cidr.service
       pod_cidr        = var.cidr.pod

@@ -1,7 +1,3 @@
-variable "vault_server" {
-  type = string
-  default = "http://193.32.219.99:9200/"
-}
 
 variable "cluster_name" {
   type = string
@@ -40,9 +36,9 @@ variable "master_availability_zones"{
 
 variable "cidr" {
   type = object({
-    service = string
-    pod     = string
-    node_cidr_mask = string
+    service         = optional(string, "")
+    pod             = optional(string, "")
+    node_cidr_mask  = optional(string, "")
   })
   default = {
     service   = "172.16.0.0/16"
