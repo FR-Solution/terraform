@@ -7,6 +7,16 @@ module "yandex-network-base-configuration" {
             folder_name = "example"
         }
     }
+    vpc = {
+        extra-args = {
+            name = "vpc.clusters"
+        }
+    }
+    route-table = {
+        extra-args = {
+            name = "vpc-clusters-route-table"
+        }
+    }
 }
 
 module "yandex-k8s-base-configuration" {

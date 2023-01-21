@@ -19,7 +19,7 @@ provider "keycloak" {
   client_id                = var.KEYCLOAK_CLIENT_ID
   username                 = var.KEYCLOAK_USER
   password                 = var.KEYCLOAK_PASSWORD
-  url                      = var.KEYCLOAK_CLIENT_SECRET
+  url                      = var.KEYCLOAK_URL
   root_ca_certificate      = ""
   tls_insecure_skip_verify = true
 }

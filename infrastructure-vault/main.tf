@@ -3,8 +3,8 @@ module "vault-root-pki-configuration" {
     
     root-pki = {
       extra-args = {
-        path        = "duck-pki"
-        description = "This duck-duck pki"
+        path        = "pki-root"
+        description = "This is pki root"
       }
     }
 }
