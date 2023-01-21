@@ -9,18 +9,6 @@ variable "base_domain" {
   default = "dobry-kot.ru"
 }
 
-variable "yandex_cloud_name" {
-  description = "module:K8S "
-  type        = string
-  default     = "cloud-uid-vf465ie7"
-}
-
-variable "yandex_folder_name" {
-  description = "module:K8S "
-  type        = string
-  default     = "example"
-}
-
 variable "master_availability_zones"{
   type = object({
     ru-central1-a = string
@@ -45,4 +33,32 @@ variable "cidr" {
     pod       = "10.100.0.0/16"
     node_cidr_mask = "24"
   }
+}
+
+variable "VAULT_ADDR" {
+  default = ""
+}
+
+variable "VAULT_TOKEN" {
+  default = ""
+}
+
+variable "YC_FOLDER_ID" {
+  type = string
+  default = ""
+}
+
+variable "YC_ZONE" {
+  type = string
+  default = ""
+}
+
+variable "YC_CLOUD_ID" {
+  type = string
+  default = ""
+}
+
+variable "YC_TOKEN" {
+  type = string
+  default = ""
 }
