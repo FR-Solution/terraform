@@ -7,10 +7,6 @@ export TF_VAR_KEYCLOAK_USER=""
 export TF_VAR_KEYCLOAK_PASSWORD=""
 export TF_VAR_KEYCLOAK_URL=""
 
-export TF_VAR_VAULT_TOKEN=""
-export TF_VAR_VAULT_ADDR=""
-
-
 terraform workspace new dev
 terraform plan
 terraform apply
