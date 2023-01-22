@@ -17,3 +17,11 @@ variable "KEYCLOAK_PASSWORD" {
 variable "KEYCLOAK_URL" {
   default = ""
 }
+
+variable "VAULT_ADDR" {
+  default = ""
+}
+
+variable "VAULT_TOKEN" {
+  default = ""
+}
