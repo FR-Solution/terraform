@@ -21,7 +21,7 @@ module "k8s-yandex-cluster" {
 
     master_group = {
         name    = "master" # Разрешенный префикс для сертификатов.
-        count   = 3
+        count   = var.master_group.count
 
         vpc_name          = "vpc.clusters"
         route_table_name  = "vpc-clusters-route-table"
@@ -61,7 +61,7 @@ module "k8s-yandex-cluster" {
 
           disk = {
             boot = {
-              image_id  = "fd8kdq6d0p8sij7h5qe3"
+              image_id  = "fd8ingbofbh3j5h7i8ll"
               size      = 30
               type      = "network-hdd"
             }

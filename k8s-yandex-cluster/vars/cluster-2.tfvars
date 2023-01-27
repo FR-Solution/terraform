@@ -11,3 +11,7 @@ master_availability_zones = {
     ru-central1-b = "10.2.2.0/24"
     ru-central1-c = "10.2.3.0/24"
 }
+
+master_group = {
+    count = 3
+}

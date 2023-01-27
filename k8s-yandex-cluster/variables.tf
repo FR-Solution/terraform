@@ -22,6 +22,18 @@ variable "master_availability_zones"{
   }
 }
 
+variable "master_group" {
+  type = object({
+    count         = optional(string, "")
+
+  })
+  default = {
+    count   = "1"
+
+  }
+}
+
+
 variable "cidr" {
   type = object({
     service         = optional(string, "")
