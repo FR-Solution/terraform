@@ -1,17 +1,25 @@
-cluster_name = "cluster-example"
 
 cidr = {
-    service         = "29.64.0.0/16"
-    pod             = "10.12.0.0/16"
-    node_cidr_mask  = "24"
+    service = "29.64.0.0/16"
+    pod = "10.102.0.0/16"
+    node_cidr_mask = "24"
 }
+cluster_name = "cluster-2"
+default_subnet = "10.2.0.0/30"
+default_zone = "ru-central1-a"
 
-master_availability_zones = {
-    ru-central1-a = "10.2.1.0/24"
-    ru-central1-b = "10.2.2.0/24"
-    ru-central1-c = "10.2.3.0/24"
-}
+vault_server = "http://193.32.219.99:9200/"
+
+yandex_cloud_name = "cloud-uid-vf465ie7"
+
+yandex_folder_name = "example"
+
+yandex_default_vpc_name = "vpc.clusters"
+
+yandex_default_route_table_name = "vpc-clusters-route-table"
+
+base_domain = "dobry-kot.ru"
 
 master_group = {
-    count = 3
+    count = 1
 }

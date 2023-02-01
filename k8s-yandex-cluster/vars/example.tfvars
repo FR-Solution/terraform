@@ -1,11 +1,11 @@
 
 cidr = {
     service = "29.64.0.0/16"
-    pod = "10.103.0.0/16"
+    pod = "10.100.0.0/16"
     node_cidr_mask = "24"
 }
-cluster_name = "cluster-3"
-default_subnet = "10.3.0.0/30"
+cluster_name = "example"
+default_subnet = "10.0.0.0/30"
 default_zone = "ru-central1-a"
 
 vault_server = "http://193.32.219.99:9200/"

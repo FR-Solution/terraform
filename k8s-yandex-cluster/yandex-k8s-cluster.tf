@@ -4,7 +4,7 @@ module "k8s-yandex-cluster" {
     global_vars = {
       cluster_name    = var.cluster_name
       base_domain     = var.base_domain
-      vault_server    = var.VAULT_ADDR
+      vault_server    = var.vault_server
 
       service_cidr    = var.cidr.service
       pod_cidr        = var.cidr.pod
@@ -15,43 +15,40 @@ module "k8s-yandex-cluster" {
     }
 
     cloud_metadata = {
-      cloud_name  = "cloud-uid-vf465ie7"
-      folder_name = "example"
+      cloud_name  = var.yandex_cloud_name
+      folder_name = var.yandex_folder_name
     }
 
     master_group = {
         name    = "master" # Разрешенный префикс для сертификатов.
-        count   = var.master_group.count
+        count   = 1
 
-        vpc_name          = "vpc.clusters"
-        route_table_name  = "vpc-clusters-route-table"
+        vpc_name          = var.yandex_default_vpc_name
+        route_table_name  = var.yandex_default_route_table_name
 
-        # default_subnet    = "10.1.0.0/16"
-        # default_zone      = "ru-central1-a"
+        default_subnet    = var.default_subnet
+        default_zone      = var.default_zone
 
-        # При указании напрямую подсетей, нужно указывать и зону и подсеть, а 
-        # default_zone и default_subnet отключать. И обратная ситуация, не используйте кастом сети
-        # одновременно с дефолтными значениями.
         resources_overwrite = {
-            master-1 = {
-              network_interface = {
-                zone    = "ru-central1-a"
-                subnet  = "10.1.0.0/24"
-              }
+            # master-1 = {
+            #   network_interface = {
+            #     zone    = "ru-central1-a"
+            #     subnet  = "10.1.0.0/24"
+            #   }
 
-            }
-            master-2 = {
-              network_interface = {
-                zone    = "ru-central1-b"
-                subnet  = "10.2.0.0/24"
-              }
-            }
-            master-3 = {
-              network_interface = {
-                zone    = "ru-central1-c"
-                subnet  = "10.3.0.0/24"
-              }
-            }
+            # }
+            # master-2 = {
+            #   network_interface = {
+            #     zone    = "ru-central1-b"
+            #     subnet  = "10.2.0.0/24"
+            #   }
+            # }
+            # master-3 = {
+            #   network_interface = {
+            #     zone    = "ru-central1-c"
+            #     subnet  = "10.3.0.0/24"
+            #   }
+            # }
         }
 
         resources = {
@@ -61,7 +58,7 @@ module "k8s-yandex-cluster" {
 
           disk = {
             boot = {
-              image_id  = "fd8ingbofbh3j5h7i8ll"
+              image_id  = "fd8kdq6d0p8sij7h5qe3"
               size      = 30
               type      = "network-hdd"
             }
@@ -85,4 +82,13 @@ module "k8s-yandex-cluster" {
         }
 
     }
+}
+
+resource "vault_pki_secret_backend_cert" "terraform-kubeconfig" {
+  depends_on = [
+    module.k8s-yandex-cluster
+  ]
+    backend       = module.k8s-yandex-cluster.k8s_global_vars.ssl.intermediate.kubernetes-ca.path
+    name          = "kube-apiserver-cluster-admin-client"
+    common_name   = "custom:terraform-kubeconfig"
 }
