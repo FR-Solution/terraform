@@ -36,5 +36,4 @@ master_group = {
 
     default_subnet      = "10.3.0.0/24"
     default_zone        = "ru-central1-a"
-
 }

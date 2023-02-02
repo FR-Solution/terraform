@@ -15,8 +15,8 @@ locals {
     resources_overwrite = {}
 
     resources = {
-      core = 6
-      memory = 12
+      core          = 6
+      memory        = 12
       core_fraction = 100
       disk = {
         boot = {
