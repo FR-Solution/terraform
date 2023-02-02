@@ -33,7 +33,7 @@ provider "vault" {
 
 provider "helm" {
   kubernetes {
-    host = "https://${module.k8s-yandex-cluster.kube-apiserver-lb}:${module.k8s-yandex-cluster.k8s_global_vars.kubernetes-ports.kube-apiserver-port-lb}"
+    host = "https://${local.kube_apiserver_ip}:${local.kube_apiserver_port}"
 
     client_certificate     = vault_pki_secret_backend_cert.terraform-kubeconfig.certificate
     client_key             = vault_pki_secret_backend_cert.terraform-kubeconfig.private_key

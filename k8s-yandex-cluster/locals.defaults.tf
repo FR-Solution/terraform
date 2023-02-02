@@ -1,7 +1,3 @@
-locals {
-  global_vars = module.k8s-yandex-cluster.k8s_global_vars
-  kube_apiserver_ip = module.k8s-yandex-cluster.kube-apiserver-lb
-}
 
 locals {
   master_group = {
@@ -12,7 +8,27 @@ locals {
     default_subnet    = "10.0.0.0/24"
     default_zone      = "ru-central1-a"
 
-    resources_overwrite = {}
+    resources_overwrite = {
+      # master-1 = {
+      #   network_interface = {
+      #     zone    = "ru-central1-a"
+      #     subnet  = "10.1.0.0/24"
+      #   }
+
+      # }
+      # master-2 = {
+      #   network_interface = {
+      #     zone    = "ru-central1-b"
+      #     subnet  = "10.2.0.0/24"
+      #   }
+      # }
+      # master-3 = {
+      #   network_interface = {
+      #     zone    = "ru-central1-c"
+      #     subnet  = "10.3.0.0/24"
+      #   }
+      # }
+    }
 
     resources = {
       core          = 6
@@ -30,7 +46,7 @@ locals {
             mode        = "READ_WRITE"
             auto_delete = false
             type        = "network-ssd"
-            }
+          }
         }
       }
       network_interface = {
