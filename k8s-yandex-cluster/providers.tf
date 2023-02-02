@@ -31,6 +31,15 @@ provider "vault" {
     token   = var.VAULT_TOKEN
 }
 
+resource "vault_pki_secret_backend_cert" "terraform-kubeconfig" {
+  depends_on = [
+    module.k8s-yandex-cluster
+  ]
+    backend       = module.k8s-yandex-cluster.k8s_global_vars.ssl.intermediate.kubernetes-ca.path
+    name          = "kube-apiserver-cluster-admin-client"
+    common_name   = "custom:terraform-kubeconfig"
+}
+
 provider "helm" {
   kubernetes {
     host = "https://${local.kube_apiserver_ip}:${local.kube_apiserver_port}"

@@ -3,10 +3,10 @@ module "k8s-yandex-cloud-controller" {
 
   chart_version = "0.0.3"
 
-  yandex_default_vpc_name         = var.master_group.vpc_name
-  yandex_default_route_table_name = var.master_group.route_table_name
+  yandex_default_vpc_name         = local.master_group_merge.vpc_name
+  yandex_default_route_table_name = local.master_group_merge.route_table_name
 
-  global_vars         = module.k8s-yandex-cluster.k8s_global_vars
+  global_vars         = local.global_vars
   
   extra_values        = {} 
 

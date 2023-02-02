@@ -3,8 +3,8 @@ locals {
   master_group = {
     name              = "master"
     count             = 0
-    route_table_name  = null
-    vpc_name          = null
+    vpc_name          = "vpc.clusters"
+    route_table_name  = "vpc-clusters-route-table"
     default_subnet    = "10.0.0.0/24"
     default_zone      = "ru-central1-a"
 
@@ -60,4 +60,26 @@ locals {
   }
 
   master_group_merge = merge(local.master_group, var.master_group)
+}
+
+locals {
+  custom_global_vars = {
+    cluster_name    = "example"
+    base_domain     = "dobry-kot.ru"
+    vault_server    = "http://193.32.219.99:9200/"
+
+    service_cidr    = "29.64.0.0/16"
+    pod_cidr        = "10.100.0.0/16"
+    node_cidr_mask  = "24"
+    
+    ssh_username  = "dkot"
+    ssh_rsa_path  = "~/.ssh/id_rsa.pub"
+
+    cilium = {
+        cluster_id = 10
+    }
+  }
+
+  custom_global_vars_merge = merge(local.custom_global_vars, var.global_vars)
+
 }
