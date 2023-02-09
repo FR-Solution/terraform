@@ -1,5 +1,5 @@
 module "cilium" {
-  source = "git::https://github.com/fraima/terraform-modules//modules/k8s-yandex-cilium?ref=main"
+  source = "git::https://github.com/fraima/terraform-modules//modules/helm-yandex-cilium?ref=main"
 
   chart_version = "1.12.0"
 

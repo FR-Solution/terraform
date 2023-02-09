@@ -14,7 +14,7 @@ cloud_metadata = {
 
 master_group = {
     name                = "master"
-    count               = 1
+    count               = 3
 
     default_subnet      = "10.2.0.0/24"
     default_zone        = "ru-central1-a"

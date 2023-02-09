@@ -33,9 +33,9 @@ provider "vault" {
 
 resource "vault_pki_secret_backend_cert" "terraform-kubeconfig" {
   depends_on = [
-    module.k8s-yandex-cluster
+    module.kubernetes
   ]
-    backend       = module.k8s-yandex-cluster.k8s_global_vars.ssl.intermediate.kubernetes-ca.path
+    backend       = local.global_vars.ssl.intermediate.kubernetes-ca.path
     name          = "kube-apiserver-cluster-admin-client"
     common_name   = "custom:terraform-kubeconfig"
 }

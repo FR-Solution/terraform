@@ -1,5 +1,5 @@
-module "k8s-yandex-cloud-controller" {
-  source = "git::https://github.com/fraima/terraform-modules//modules/k8s-yandex-cloud-controller?ref=main"
+module "yandex-cloud-controller" {
+  source = "git::https://github.com/fraima/terraform-modules//modules/helm-yandex-cloud-controller?ref=main"
 
   chart_version = "0.0.3"
 
