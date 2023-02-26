@@ -15,3 +15,8 @@ variable "master_group"{
       error_message = "var.master_group.count is not correct. Number of master can be 1,3,5"
   }
 }
+
+variable "yandex_cloud_controller_sa_name" {
+  type = string
+  default = "k8s-cloud-controller"
+}
