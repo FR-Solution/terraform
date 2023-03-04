@@ -1,3 +1,8 @@
+locals {
+  global_vars         = module.kubernetes.k8s_global_vars
+  kube_apiserver_ip   = module.kubernetes.kube-apiserver-lb
+  kube_apiserver_port = module.kubernetes.k8s_global_vars.kubernetes-ports.kube-apiserver-port-lb
+}
 
 locals {
   master_group = {
@@ -62,24 +67,3 @@ locals {
   master_group_merge = merge(local.master_group, var.master_group)
 }
 
-locals {
-  custom_global_vars = {
-    cluster_name    = "example"
-    base_domain     = "dobry-kot.ru"
-    vault_server    = "http://193.32.219.99:9200/"
-
-    service_cidr    = "29.64.0.0/16"
-    pod_cidr        = "10.100.0.0/16"
-    node_cidr_mask  = "24"
-    
-    ssh_username  = "dkot"
-    ssh_rsa_path  = "~/.ssh/id_rsa.pub"
-
-    cilium = {
-        cluster_id = 10
-    }
-  }
-
-  custom_global_vars_merge = merge(local.custom_global_vars, var.global_vars)
-
-}
