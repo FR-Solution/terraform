@@ -1,10 +1,19 @@
 global_vars = {
     cluster_name    = "example"
     pod_cidr        = "10.102.0.0/16"
-    cilium = {
-        cluster_id = 10
+
+    serviceaccount_k8s_controllers_name = "yandex-k8s-controllers"
+
+    kube_apiserver_flags = {
+        oidc-issuer-url = "https://auth.dobry-kot.ru/auth/realms/master"
+        oidc-client-id  = "kubernetes-clusters"
     }
+    kube_controller_manager_flags = {
+        cluster-name = "kubernetes"
+    }
+    kube_scheduler_flags = {
         
+    }
 }
 
 cloud_metadata = {

@@ -1,5 +1,7 @@
 locals {
   custom_global_vars = {
+    serviceaccount_k8s_controllers_name = "yandex-k8s-controllers"
+
     cluster_name    = "example"
     base_domain     = "dobry-kot.ru"
     vault_server    = "http://193.32.219.99:9200/"

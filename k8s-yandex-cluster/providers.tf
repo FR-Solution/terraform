@@ -33,7 +33,7 @@ provider "vault" {
 
 resource "vault_pki_secret_backend_cert" "terraform-kubeconfig" {
   depends_on = [
-    module.kubernetes
+    module.kubernetes.k8s-vault
   ]
     backend       = local.global_vars.ssl.intermediate.kubernetes-ca.path
     name          = "kube-apiserver-cluster-admin-client"
@@ -50,3 +50,14 @@ provider "helm" {
 
   }
 }
+
+
+provider "kubernetes" {
+    host = "https://${local.kube_apiserver_ip}:${local.kube_apiserver_port}"
+
+    client_certificate     = vault_pki_secret_backend_cert.terraform-kubeconfig.certificate
+    client_key             = vault_pki_secret_backend_cert.terraform-kubeconfig.private_key
+    cluster_ca_certificate = vault_pki_secret_backend_cert.terraform-kubeconfig.issuing_ca
+
+}
+

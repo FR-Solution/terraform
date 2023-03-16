@@ -28,4 +28,9 @@ module "yandex-k8s-base-configuration" {
             folder_name = "example"
         }
     }
+    k8s-service-account = {
+        extra-args = {
+            name        = "yandex-k8s-controllers"
+        }  
+    }
 }

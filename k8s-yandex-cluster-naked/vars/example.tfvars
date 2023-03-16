@@ -2,6 +2,8 @@ global_vars = {
     cluster_name    = "example"
     pod_cidr        = "10.102.0.0/16"
 
+    serviceaccount_k8s_controllers_name = "yandex-k8s-controllers"
+
     kube_apiserver_flags = {
         oidc-issuer-url = "https://auth.dobry-kot.ru/auth/realms/master"
         oidc-client-id  = "kubernetes-clusters"
