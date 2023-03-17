@@ -15,9 +15,10 @@ locals {
                             protocol    = "tcp"
                             ports_to    = [
                                 80,
-                                443
+                                443,
+                                8080
                             ]
-                        }
+                        },
                     ]
                 },
                 {

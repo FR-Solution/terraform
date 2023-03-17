@@ -35,9 +35,9 @@ write_files:
         svc:
           def-daial-duration: 10s
           sgroups:
-            dial-duration: 3s #override default-connect-tmo
+            dial-duration: 3s
             address: tcp://193.32.219.99:9000
-            check-sync-status: 20s #mandatory
+            check-sync-status: 5s
 
   - path: /etc/systemd/system/hbf.service
     owner: root:root
