@@ -32,6 +32,18 @@ locals {
                         }
                     ]
                 },
+                {
+                    sg_to  = "teamA_backend"
+                    access = [
+                        {
+                            description = "access from teamA_backend to teamA_backend"
+                            protocol    = "tcp"
+                            ports_to    = [
+                                "0-64000"
+                            ]
+                        }
+                    ]
+                },
 
             ]
         },
@@ -49,6 +61,18 @@ locals {
                             protocol    = "tcp"
                             ports_to    = [
                                 9000
+                            ]
+                        }
+                    ]
+                },
+                {
+                    sg_to  = "teamA_frontend"
+                    access = [
+                        {
+                            description = "access from teamA_frontend to teamA_frontend"
+                            protocol    = "tcp"
+                            ports_to    = [
+                                "0-64000"
                             ]
                         }
                     ]

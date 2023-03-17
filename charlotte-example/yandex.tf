@@ -97,8 +97,7 @@ module "firewall" {
     yandex_compute_instance.team-a-backend,
     yandex_compute_instance.team-a-frontend
   ]
-    source = "../../modules/charlotte"
-
+    source = "git::https://github.com/fraima/terraform-modules//modules/charlotte?ref=main"
     security_groups = local.security_groups
 
 }
