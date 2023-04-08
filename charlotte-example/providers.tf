@@ -5,8 +5,8 @@ terraform {
   
   required_providers {
     sgroups = {
-       version = "~> 1.0.0"
-       source = "h-bf/sgroups"
+       version = "1.0.3"
+       source = "fraima/charlotte"
     }
     yandex = {
       source = "yandex-cloud/yandex"

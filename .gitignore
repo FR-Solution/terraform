@@ -3,12 +3,8 @@ infrastructure-*/states/*
 k8s-*/.terraform*
 k8s-*/states/*
 export.sh
-charlotte-example/states/example/terraform.tfstate.backup
-charlotte-example/states/example/terraform.tfstate
-charlotte-example/.terraform/providers/registry.terraform.io/yandex-cloud/yandex/0.87.0/linux_amd64
-charlotte-example/.terraform/providers/registry.terraform.io/yandex-cloud/yandex/0.81.0/linux_amd64
-charlotte-example/.terraform/providers/registry.terraform.io/h-bf/sgroups/1.0.0/linux_amd64
-charlotte-example/.terraform/modules/modules.json
-charlotte-example/.terraform/terraform.tfstate
-charlotte-example/.terraform/environment
 charlotte-example/.terraform.lock.hcl
+charlotte-example/.terraform/*
+charlotte-example/states/*
+k8s-yandex-cluster-naked/terraform.tfstate
+k8s-yandex-cluster-naked/terraform.tfstate.backup

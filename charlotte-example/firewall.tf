@@ -1,120 +1,250 @@
 locals {
+    cluster_name = "example"
 
     security_groups  = [
         {
-            name = "teamA_backend"
-            cidrs = [
-                "${yandex_compute_instance.team-a-backend.network_interface[0].ip_address}/32"
-            ]
+            name = "kubernetes/${local.cluster_name}/masters"
+            cidrs = []
             rules = [
                 {
-                    sg_to  = "teamA_frontend"
+                    sg_to  = "kubernetes/${local.cluster_name}/masters"
                     access = [
                         {
-                            description = "access from teamA_backend to teamA_frontend"
+                            description = "access from kubernetes/${local.cluster_name} to kubernetes/${local.cluster_name}"
                             protocol    = "tcp"
                             ports_to    = [
-                                80,
-                                443,
-                                8080
+                                10250, # :::10250   component: kubelet           purpose: server-port
+                                6443,  # :::6443    component: kube-apiserver    purpose: server-port
+                                2379,  # :::2379    component: etcd              purpose: server-port
+                                2380,  # :::2380    component: etcd              purpose: peer-port
+                                2381,  # :::2381    component: etcd              purpose: metrics-port
+                                2382,  # :::2382    component: etcd              purpose: server-port-target-lb
                             ]
                         },
                     ]
                 },
                 {
-                    sg_to  = "hbf-server"
+                    sg_to  = "infra/hbf-server"
                     access = [
                         {
-                            description = "access from teamA_backend to hbf-server"
+                            description = "access from kubernetes/${local.cluster_name} to hbf-server"
                             protocol    = "tcp"
                             ports_to    = [
-                                9000
+                                9000,   # TO HBF-SERVER
+                                9200,   # TO VAULT
+                                443,    # TO OIDP
                             ]
                         }
                     ]
                 },
                 {
-                    sg_to  = "teamA_backend"
+                    sg_to  = "infra/dns"
                     access = [
                         {
-                            description = "access from teamA_backend to teamA_backend"
-                            protocol    = "tcp"
+                            description = "access from kubernetes/${local.cluster_name} to infra/dns"
+                            protocol    = "udp"
                             ports_to    = [
-                                "0-64000"
+                                53, # TO DNS-SERVERS
                             ]
                         }
                     ]
                 },
-
+                {
+                    sg_to  = "world/dl.k8s.io"
+                    access = [
+                        {
+                            description = "access from kubernetes/${local.cluster_name} to world/dl.k8s.io"
+                            protocol    = "tcp"
+                            ports_to    = [
+                                443,    # TO REGISTRY BIN
+                            ]
+                        }
+                    ]
+                },
+                {
+                    sg_to  = "world/k8s.gcr.io"
+                    access = [
+                        {
+                            description = "access from kubernetes/${local.cluster_name} to world/k8s.gcr.io"
+                            protocol    = "tcp"
+                            ports_to    = [
+                                443,    # TO REGISTRY DOCKER
+                            ]
+                        }
+                    ]
+                },
+                {
+                    sg_to  = "world/storage.googleapis.com"
+                    access = [
+                        {
+                            description = "access from kubernetes/${local.cluster_name} to world/storage.googleapis.com"
+                            protocol    = "tcp"
+                            ports_to    = [
+                                443,    # TO REGISTRY DOCKER
+                            ]
+                        }
+                    ]
+                },
+                {
+                    sg_to  = "world/github.com"
+                    access = [
+                        {
+                            description = "access from kubernetes/${local.cluster_name} to world/github.com"
+                            protocol    = "tcp"
+                            ports_to    = [
+                                443,    # TO GITHUB REPOSITORY
+                            ]
+                        }
+                    ]
+                },
+                {
+                    sg_to  = "world/objects.githubusercontent.com"
+                    access = [
+                        {
+                            description = "access from kubernetes/${local.cluster_name} to world/objects.githubusercontent.com"
+                            protocol    = "tcp"
+                            ports_to    = [
+                                443,    # TO GITHUB REPOSITORY
+                            ]
+                        }
+                    ]
+                },
+                {
+                    sg_to  = "yandex/iam"
+                    access = [
+                        {
+                            description = "access from kubernetes/${local.cluster_name} to yandex/iam"
+                            protocol    = "tcp"
+                            ports_to    = [
+                                80,    # TO REGISTRY BIN
+                            ]
+                        }
+                    ]
+                },
+                {
+                    sg_to  = "yandex/api"
+                    access = [
+                        {
+                            description = "access from kubernetes/${local.cluster_name} to yandex/api"
+                            protocol    = "tcp"
+                            ports_to    = [
+                                443,    # TO API
+                            ]
+                        }
+                    ]
+                },
             ]
         },
         {
-            name = "teamA_frontend"
+            name = "infra/hbf-server"
             cidrs = [
-                "${yandex_compute_instance.team-a-frontend.network_interface[0].ip_address}/32"
+                "193.32.219.99/32",
             ]
-            rules = [
-                {
-                    sg_to   = "hbf-server"
-                    access  = [
-                        {
-                            description = "access from teamA_backend to hbf-server"
-                            protocol    = "tcp"
-                            ports_to    = [
-                                9000
-                            ]
-                        }
-                    ]
-                },
-                {
-                    sg_to  = "teamA_frontend"
-                    access = [
-                        {
-                            description = "access from teamA_frontend to teamA_frontend"
-                            protocol    = "tcp"
-                            ports_to    = [
-                                "0-64000"
-                            ]
-                        }
-                    ]
-                },
-            ]
+            rules = []
         },
         {
-            name = "hbf-server"
+            name = "infra/dns"
             cidrs = [
-                "193.32.219.99/32"
+                "10.0.0.2/32",
+            ]
+            rules = []
+        },
+        {
+            name = "world/dl.k8s.io" # Хранилище бинарей
+            cidrs = [
+                "34.107.204.206/32",
+            ]
+            rules = []
+        },
+        {
+            name = "world/storage.googleapis.com" # Хранилище бинарей
+            cidrs = [
+                "173.194.222.128/32",
+                "173.194.221.128/32",
+                "173.194.220.128/32",
+                "173.194.73.128/32",
+                "64.233.161.128/32",
+                "64.233.162.128/32",
+                "64.233.164.128/32",
+                "74.125.205.128/32",
+            ]
+            rules = []
+        },
+        {
+            name = "world/k8s.gcr.io" # Хранилище бинарей
+            cidrs = [
+                "142.250.150.82/32",
+                "209.85.233.82/32",
+                "64.233.162.82/32",
+                "142.251.1.82/32",
+                "173.194.222.82/32",
+                "64.233.161.82/32",
+                "64.233.165.82/32",
+                "173.194.73.82/32",
+            ]
+            rules = []
+        },
+        {
+            name = "world/github.com"
+            cidrs = [
+                "140.82.121.3/32",
+                "140.82.121.4/32",
+            ]
+            rules = []
+        },
+        {
+            name = "world/objects.githubusercontent.com"
+            cidrs = [
+                "185.199.109.133/32",
+                "185.199.108.133/32",
+                "185.199.111.133/32",
+                "185.199.110.133/32",
+            ]
+            rules = []
+        },
+        {
+            name = "yandex/iam"
+            cidrs = [
+                "169.254.169.254/32",
+            ]
+            rules = []
+        },
+        {
+            name = "yandex/api"
+            cidrs = [
+                "217.28.237.103/32",
+                "213.180.204.240/32",
+                "213.180.193.8/32",
+                "213.180.193.243/32",
+                "84.201.181.26/32",
+                "84.201.181.184/32",
+                "84.201.168.69/32",
+                "84.201.168.170/32",
+                "84.201.151.137/32",
+                "84.201.148.148/32",
+                "84.201.144.177/32",
+                "51.250.33.235/32",
             ]
             rules = []
         },
         {
             name = "world"
             cidrs = [
-                "176.0.0.0/8"
+                "176.0.0.0/8",
+                "198.0.0.0/8"
             ]
             rules = [
                 {
-                    sg_to  = "teamA_backend"
+                    sg_to  = "kubernetes/${local.cluster_name}/masters"
                     access = [
                         {
-                            description = "access from world to teamA_backend by ssh"
+                            description = "access from world to kubernetes/${local.cluster_name} by ssh"
                             protocol    = "tcp"
                             ports_to    = [
-                                22
+                                22,
+                                6443,
                             ]
                         },
-                    ]
-                },
-                {
-                    sg_to  = "teamA_frontend"
-                    access = [
-                        {
-                            description = "access from world to teamA_frontend by ssh"
-                            protocol    = "tcp"
-                            ports_to    = [
-                                22
-                            ]
-                        }
                     ]
                 },
             ]

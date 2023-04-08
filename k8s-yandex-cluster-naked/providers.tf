@@ -13,10 +13,19 @@ terraform {
       source  = "hashicorp/vault"
       version = "3.12.0"
     }
+    sgroups = {
+       version = "1.0.3"
+       source = "fraima/charlotte"
+    }
 
   }
   required_version = ">= 0.13"
   # experiments = [module_variable_optional_attrs]
+}
+
+provider "sgroups" {
+  sgroups_address = "tcp://193.32.219.99:9000"
+  sgroups_dial_duration = "20s"
 }
 
 provider "yandex" {
@@ -33,7 +42,7 @@ provider "vault" {
 
 resource "vault_pki_secret_backend_cert" "terraform-kubeconfig" {
   depends_on = [
-    module.kubernetes
+    module.kubernetes.k8s-vault
   ]
     backend       = local.global_vars.ssl.intermediate.kubernetes-ca.path
     name          = "kube-apiserver-cluster-admin-client"
@@ -50,3 +59,14 @@ provider "helm" {
 
   }
 }
+
+
+provider "kubernetes" {
+    host = "https://${local.kube_apiserver_ip}:${local.kube_apiserver_port}"
+
+    client_certificate     = vault_pki_secret_backend_cert.terraform-kubeconfig.certificate
+    client_key             = vault_pki_secret_backend_cert.terraform-kubeconfig.private_key
+    cluster_ca_certificate = vault_pki_secret_backend_cert.terraform-kubeconfig.issuing_ca
+
+}
+

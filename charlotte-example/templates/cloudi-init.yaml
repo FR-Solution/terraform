@@ -13,12 +13,15 @@ users:
 packages:
   - nftables
   - tree
+  - nginx
 
 runcmd:
   - wget -O /usr/bin/hbf "https://storage.yandexcloud.net/m.images/fraimhbf/to-nft?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=YCAJEhOlYpv1GRY7hghCojNX5%2F20230316%2Fru-central1%2Fs3%2Faws4_request&X-Amz-Date=20230316T162047Z&X-Amz-Expires=2592000&X-Amz-Signature=42551F34D67CD94F43E5CA5565E541FE9D7C3627D6537043A25CFAE7C581939E&X-Amz-SignedHeaders=host"
   - chmod +x /usr/bin/hbf
   - systemctl enable  hbf.service
   - systemctl start   hbf.service
+  - systemctl enable  nginx.service
+  - systemctl start   nginx.service
 
 write_files:
 
