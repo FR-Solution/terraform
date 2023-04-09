@@ -2,10 +2,6 @@ global_vars = {
     cluster_name    = "example"
     pod_cidr        = "10.102.0.0/16"
 
-    firewall = {
-        enabled = false
-    }
-
     serviceaccount_k8s_controllers_name = "yandex-k8s-controllers"
 
     kube_apiserver_flags = {
@@ -79,7 +75,7 @@ global_vars = {
             extra_values = {
                 metadata = {
                     nodeLabels = {
-                        "node-role.kubernetes.io/treska" = ""
+                        "node-role.kubernetes.io/worker" = ""
                         "provider" = "yandex"    
                     }
                     cloudLabels = {
