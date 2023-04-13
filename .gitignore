@@ -8,3 +8,6 @@ charlotte-example/.terraform/*
 charlotte-example/states/*
 k8s-yandex-cluster-naked/terraform.tfstate
 k8s-yandex-cluster-naked/terraform.tfstate.backup
+k8s-yandex-cluster/terraform.tfstate.backup
+k8s-yandex-cluster/terraform.tfstate
+k8s-yandex-cluster/hbf.yaml

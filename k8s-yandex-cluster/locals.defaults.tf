@@ -1,3 +1,8 @@
+locals {
+  global_vars         = module.kubernetes.k8s_global_vars
+  kube_apiserver_ip   = try(module.kubernetes.kube-apiserver-lb, "")
+  kube_apiserver_port = module.kubernetes.k8s_global_vars.kubernetes-ports.kube-apiserver-port-lb
+}
 
 locals {
   master_group = {
@@ -54,16 +59,14 @@ locals {
       }
     }
     metadata = {
-        user_data_template = "fraima" # all | packer | fraima
+        user_data_template = "fraima" # all | fraima | fraima-hbf 
       }
 
   }
 
   master_group_merge = merge(local.master_group, var.master_group)
-}
 
-locals {
-  custom_global_vars = {
+  default_global_vars = {
     cluster_name    = "example"
     base_domain     = "dobry-kot.ru"
     vault_server    = "http://193.32.219.99:9200/"
@@ -75,11 +78,8 @@ locals {
     ssh_username  = "dkot"
     ssh_rsa_path  = "~/.ssh/id_rsa.pub"
 
-    cilium = {
-        cluster_id = 10
-    }
   }
 
-  custom_global_vars_merge = merge(local.custom_global_vars, var.global_vars)
-
+  custom_global_vars_merge = merge(local.default_global_vars, var.global_vars)
 }
+
