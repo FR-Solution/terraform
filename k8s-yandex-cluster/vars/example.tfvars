@@ -1,6 +1,8 @@
 global_vars = {
     cluster_name    = "example"
-    pod_cidr        = "10.102.0.0/16"
+
+    pod_cidr        = "10.102.0.0/22"
+    node_cidr_mask  = "24"
 
     serviceaccount_k8s_controllers_name = "yandex-k8s-controllers"
 
@@ -56,23 +58,45 @@ global_vars = {
 
         yandex-cloud-controller = {
             enabled = true
+            release = {
+                chart_version = "0.0.8"
+            }
+            module_values = {
+                yandex_cloud_controller_sa_name = "k8s-cloud-controller"
+            }
             extra_values = {}
         }
 
         yandex-csi-controller = {
+            enabled = true
+            module_values = {
+                yandex_cloud_controller_sa_name = "k8s-csi-controller"
+            }
+            extra_values = {}
+        }
+
+        victoria-metrics-stack = {
             enabled = true
             extra_values = {}
         }
 
         compute-instance = {
             enabled = false
-            custom_values = {
+            module_values = {
                 subnet_id   = "e9bndv0b3c5asheadg09"
                 zone        = "ru-central1-a"
                 image_id    = "fd8ingbofbh3j5h7i8ll"
                 replicas    = 1
             }
+            release = {
+                chart_version = "0.1.14"
+            }
             extra_values = {
+                resources = {
+                    coreFraction = 100
+                    cores   = 16
+                    memory  = 16
+                }
                 metadata = {
                     nodeLabels = {
                         "node-role.kubernetes.io/worker" = ""

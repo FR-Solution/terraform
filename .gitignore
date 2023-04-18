@@ -11,3 +11,12 @@ k8s-yandex-cluster-naked/terraform.tfstate.backup
 k8s-yandex-cluster/terraform.tfstate.backup
 k8s-yandex-cluster/terraform.tfstate
 k8s-yandex-cluster/hbf.yaml
+k8s-yandex-cluster/workload/vm-rules-mixin.yaml
+k8s-yandex-cluster/workload/vm-rules-openshift.yaml
+k8s-yandex-cluster/workload/vm-pod-scrape.yaml
+k8s-yandex-cluster/workload/vm-cluster.yaml
+k8s-yandex-cluster/workload/istio-install.md
+k8s-yandex-cluster/workload/ingress.yaml
+k8s-yandex-cluster/workload/hbf-server.yaml
+k8s-yandex-cluster/workload/hbf-client.yaml
+k8s-yandex-cluster/workload/envoy.yaml
