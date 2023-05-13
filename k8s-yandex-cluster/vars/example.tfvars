@@ -110,6 +110,19 @@ global_vars = {
         }
     }
 
+    master_group = {
+        name                = "master"
+        count               = 1
+
+        default_subnet      = "10.0.0.0/24"
+        default_zone        = "ru-central1-a"
+
+        metadata = {
+            # user_data_template = "fraima-hbf"
+            user_data_template = "fraima"
+        }
+    }
+
 }
 
 cloud_metadata = {
@@ -117,15 +130,3 @@ cloud_metadata = {
     folder_name = "example"
 }
 
-master_group = {
-    name                = "master"
-    count               = 1
-
-    default_subnet      = "10.0.0.0/24"
-    default_zone        = "ru-central1-a"
-
-    metadata = {
-        # user_data_template = "fraima-hbf"
-        user_data_template = "fraima"
-    }
-}
