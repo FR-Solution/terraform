@@ -20,3 +20,4 @@ k8s-yandex-cluster/workload/ingress.yaml
 k8s-yandex-cluster/workload/hbf-server.yaml
 k8s-yandex-cluster/workload/hbf-client.yaml
 k8s-yandex-cluster/workload/envoy.yaml
+test-hbf/*
