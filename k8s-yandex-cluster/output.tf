@@ -1,3 +1,3 @@
 output "LB-IP" {
-    value = "kubectl config set-cluster  cluster --server=https://${local.kube_apiserver_ip}:${local.kube_apiserver_port} --insecure-skip-tls-verify"
+    value = "kubectl config set-cluster  cluster --server=https://${try(module.kubernetes.kube-apiserver-lb, "")}:${module.kubernetes.k8s_global_vars.kubernetes-ports.kube-apiserver-port-lb} --insecure-skip-tls-verify"
 }

@@ -13,6 +13,9 @@ terraform {
       source  = "hashicorp/vault"
       version = "3.12.0"
     }
+    utils = {
+      source = "cloudposse/utils"
+    }
     # sgroups = {
     #    version = "1.0.3"
     #    source = "fraima/charlotte"
@@ -44,14 +47,14 @@ resource "vault_pki_secret_backend_cert" "terraform-kubeconfig" {
   depends_on = [
     module.kubernetes.k8s-vault
   ]
-    backend       = local.global_vars.ssl.intermediate.kubernetes-ca.path
+    backend       = module.kubernetes.k8s_global_vars.ssl.intermediate.kubernetes-ca.path
     name          = "kube-apiserver-cluster-admin-client"
     common_name   = "custom:terraform-kubeconfig"
 }
 
 provider "helm" {
   kubernetes {
-    host = "https://${local.kube_apiserver_ip}:${local.kube_apiserver_port}"
+    host = "https://${try(module.kubernetes.kube-apiserver-lb, "")}:${module.kubernetes.k8s_global_vars.kubernetes-ports.kube-apiserver-port-lb}"
 
     client_certificate     = vault_pki_secret_backend_cert.terraform-kubeconfig.certificate
     client_key             = vault_pki_secret_backend_cert.terraform-kubeconfig.private_key
@@ -60,9 +63,8 @@ provider "helm" {
   }
 }
 
-
 provider "kubernetes" {
-    host = "https://${local.kube_apiserver_ip}:${local.kube_apiserver_port}"
+    host = "https://${try(module.kubernetes.kube-apiserver-lb, "")}:${module.kubernetes.k8s_global_vars.kubernetes-ports.kube-apiserver-port-lb}"
 
     client_certificate     = vault_pki_secret_backend_cert.terraform-kubeconfig.certificate
     client_key             = vault_pki_secret_backend_cert.terraform-kubeconfig.private_key
