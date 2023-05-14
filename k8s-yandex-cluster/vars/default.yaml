@@ -18,11 +18,12 @@ master_group:
   default_subnet:   "10.0.0.0/24"
   default_zone:     "ru-central1-a"
 
-  resources_overwrite: {}
+  resources_override: {}
     # master-1:
-    #   network_interface:
-    #     zone:   "ru-central1-a"
-    #     subnet: "10.1.0.0/24"
+
+    #   disk:
+    #     boot:
+    #       image_id: "fd85bsqgh9modtumls21"
 
     # master-2:
     #   network_interface:
