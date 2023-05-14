@@ -11,7 +11,7 @@ data "utils_deep_merge_yaml" "deep_merge_global_vars" {
 }
 
 module "kubernetes" {
-    source = "git::https://github.com/fraima/terraform-modules//modules/k8s-yandex-cluster-infra?ref=TFM-49"
+    source = "git::https://github.com/fraima/terraform-modules//modules/k8s-yandex-cluster-infra?ref=main"
     
     global_vars     = yamldecode(data.utils_deep_merge_yaml.deep_merge_global_vars.output)
     cloud_metadata  = var.cloud_metadata
