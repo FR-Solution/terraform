@@ -6,6 +6,24 @@ global_vars = {
 
     serviceaccount_k8s_controllers_name = "yandex-k8s-controllers"
 
+    base_versions = {
+        kubernetes_version = "v1.23.12"
+    }
+    component_versions = {
+        
+        bin = {
+            containerd = {
+                bin_url     = "https://github.com/containerd/containerd/releases/download/v1.6.6/containerd-1.6.6-linux-amd64.tar.gz"
+                sha256_url  = "https://github.com/containerd/containerd/releases/download/v1.6.6/containerd-1.6.6-linux-amd64.tar.gz.sha256sum"
+            }
+        }
+        static_pod = {
+            etcd = {
+                version = "3.5.3-0"
+            }
+        }
+    }
+
     kube_apiserver_flags = {
         oidc-issuer-url         = "https://auth.dobry-kot.ru/auth/realms/master"
         oidc-client-id          = "kubernetes-clusters"
@@ -94,8 +112,8 @@ global_vars = {
             extra_values = {
                 resources = {
                     coreFraction = 100
-                    cores   = 16
-                    memory  = 16
+                    cores        = 16
+                    memory       = 16
                 }
                 metadata = {
                     nodeLabels = {
