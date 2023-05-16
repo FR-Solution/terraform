@@ -16,20 +16,20 @@ terraform {
     utils = {
       source = "cloudposse/utils"
     }
-    # sgroups = {
-    #    version = "1.0.3"
-    #    source = "fraima/charlotte"
-    # }
+    sgroups = {
+       version = "1.0.3"
+       source = "fraima/charlotte"
+    }
 
   }
   required_version = ">= 0.13"
   # experiments = [module_variable_optional_attrs]
 }
 
-# provider "sgroups" {
-#   sgroups_address = "tcp://193.32.219.99:9000"
-#   sgroups_dial_duration = "20s"
-# }
+provider "sgroups" {
+  sgroups_address = "tcp://193.32.219.99:9000"
+  sgroups_dial_duration = "20s"
+}
 
 provider "yandex" {
   token     = var.YC_TOKEN

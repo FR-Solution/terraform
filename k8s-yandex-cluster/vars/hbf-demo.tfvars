@@ -1,13 +1,13 @@
 global_vars = {
-    cluster_name    = "example"
+    cluster_name    = "hbf-demo"
 
-    pod_cidr        = "10.102.0.0/22"
+    pod_cidr        = "10.103.0.0/22"
     node_cidr_mask  = "24"
 
     serviceaccount_k8s_controllers_name = "yandex-k8s-controllers"
 
     firewall = {
-        enabled = false
+        enabled = true
     }
 
     base_versions = {
@@ -44,7 +44,7 @@ global_vars = {
 
     addons = {
         cilium = {
-            enabled = true
+            enabled = false
             extra_values = {
                 cluster = {
                     name = "example"
@@ -54,32 +54,32 @@ global_vars = {
         }
 
         vault-issuer = {
-            enabled = true
+            enabled = false
             extra_values = {}
         }
 
         coredns = {
-            enabled = true
+            enabled = false
             extra_values = {}
         }
 
         gatekeeper = {
-            enabled = true
+            enabled = false
             extra_values = {}
         }
 
         certmanager = {
-            enabled = true
+            enabled = false
             extra_values = {}
         }
 
         machine-controller-manager = {
-            enabled = true
+            enabled = false
             extra_values = {}
         }
 
         yandex-cloud-controller = {
-            enabled = true
+            enabled = false
             release = {
                 chart_version = "0.0.8"
             }
@@ -90,7 +90,7 @@ global_vars = {
         }
 
         yandex-csi-controller = {
-            enabled = true
+            enabled = false
             module_values = {
                 yandex_cloud_controller_sa_name = "k8s-csi-controller"
             }
@@ -98,7 +98,7 @@ global_vars = {
         }
 
         victoria-metrics-stack = {
-            enabled = true
+            enabled = false
             extra_values = {}
         }
 
@@ -140,7 +140,7 @@ global_vars = {
         default_zone        = "ru-central1-a"
 
         metadata = {
-            user_data_template = "fraima"
+            user_data_template = "fraima-hbf"
         }
     }
 
